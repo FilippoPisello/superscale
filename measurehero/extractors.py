@@ -2,12 +2,14 @@ import re
 
 from measurehero import constants as CN
 
+from . import regex_strings as re_str
+
 
 def clean_product_name(product_name: str) -> str:
     return product_name.replace(",", ".").replace("*", "x").rstrip()
 
 
-def extract_units_info(product_name: str) -> int:
+def extract_units(product_name: str) -> int:
     product_name = clean_product_name(product_name)
 
     if pieces_words_in_name(product_name):
@@ -18,12 +20,12 @@ def extract_units_info(product_name: str) -> int:
         if res:
             return int(res.group(0).replace(" ", ""))
 
-    re_basic_uoms_eos = rf"(\d+\s*x\s*({CN.RE_UNIT_QTY})\s*({CN.RE_ALL_UOMS})$)"
+    re_basic_uoms_eos = rf"(\d+\s*x\s*{re_str.NUMBER}\s*({CN.RE_ALL_UOMS})$)"
     res = re.search(re_basic_uoms_eos, product_name)
     if res:
         return int(res.group(0).replace(" ", "").split("x")[0])
 
-    re_basic_uoms_eos = rf"(\d+\s?x\s?({CN.RE_UNIT_QTY})\s?({CN.RE_ALL_UOMS}))"
+    re_basic_uoms_eos = rf"(\d+\s?x\s?{re_str.NUMBER}\s?({CN.RE_ALL_UOMS}))"
     res = re.search(re_basic_uoms_eos, product_name)
     if res:
         return int(res.group(0).replace(" ", "").split("x")[0])
@@ -35,7 +37,24 @@ def extract_units_info(product_name: str) -> int:
     return 1
 
 
-def extract_unitary_weight_info(product_name: str) -> float:
+def extract_unit_of_measure(product_name: str) -> str:
+    product_name = clean_product_name(product_name)
+
+    re_basic_uoms_eos = rf"({re_str.NUMBER}\s*({CN.RE_ALL_UOMS})$)"
+    res = re.search(re_basic_uoms_eos, product_name)
+    if res:
+        res = res.group(0)
+        return get_uom(res)
+
+    res = re.search(re_basic_uoms_eos.replace("$", ""), product_name)
+    if res:
+        res = res.group(0)
+        return get_uom(res)
+
+    return None
+
+
+def extract_unitary_measure(product_name: str) -> float:
     product_name = clean_product_name(product_name)
 
     re_length = r"\d+ (metres|metre)"
@@ -60,23 +79,6 @@ def extract_unitary_weight_info(product_name: str) -> float:
     if res:
         res = res.group(0)
         return get_number_only(res)
-
-    return None
-
-
-def extract_uom_info(product_name: str) -> str:
-    product_name = clean_product_name(product_name)
-
-    re_basic_uoms_eos = rf"(({CN.RE_UNIT_QTY})\s*({CN.RE_ALL_UOMS})$)"
-    res = re.search(re_basic_uoms_eos, product_name)
-    if res:
-        res = res.group(0)
-        return get_uom(res)
-
-    res = re.search(re_basic_uoms_eos.replace("$", ""), product_name)
-    if res:
-        res = res.group(0)
-        return get_uom(res)
 
     return None
 
