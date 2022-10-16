@@ -1,0 +1,10 @@
+{
+  "int": {
+    "ml": ["liter", 1000],
+    "cl": ["liter", 100]
+  },
+  "fr": {
+    "litres": ["liter", 1],
+    "litre": ["liter", 1]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "int": {
+    "ml": ["liter", 1000],
+    "cl": ["liter", 100],
+    "l": ["liter", 1],
+    "liter": ["liter", 1],
+    "g": ["kilo", 1000],
+    "grams": ["kilo", 1000],
+    "kilo": ["kilo", 1],
+    "kg": ["kilo", 1],
+    "pcs": ["piece", 1],
+    "piece": ["piece", 1],
+    "pieces": ["piece", 1],
+    "unit": ["piece", 1],
+    "units": ["piece", 1],
+    "fruits": ["piece", 1]
+  },
+  "fr": {
+    "litres": ["liter", 1],
+    "litre": ["liter", 1],
+    "gmes": ["kilo", 1000],
+    "unites": ["piece", 1],
+    "sachets": ["piece", 1],
+    "sachet": ["piece", 1]
+  }
+}
