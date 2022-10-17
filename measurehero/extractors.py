@@ -5,14 +5,14 @@ from measurehero import constants as CN
 from . import regex_strings as RE
 
 
-def clean_product_name(input_str: str) -> str:
+def clean_input_string(input_str: str) -> str:
     return input_str.replace(",", ".").replace("*", "x").strip().lower()
 
 
 def extract_units(input_str: str) -> int:
-    input_str = clean_product_name(input_str)
+    input_str = clean_input_string(input_str)
 
-    if pieces_words_in_name(input_str):
+    if _pieces_words_in_name(input_str):
         res = re.search(RE.xNUMBER, input_str)
         if res:
             return int(res.group(0).replace(" ", "").replace("x", ""))
@@ -32,28 +32,28 @@ def extract_units(input_str: str) -> int:
 
 
 def extract_unit_of_measure(input_str: str) -> str:
-    input_str = clean_product_name(input_str)
+    input_str = clean_input_string(input_str)
 
     res = _re_search_end_of_string_first(RE.NUMBER_UOM, input_str)
     if res:
         res = res.group(0)
-        return get_uom(res)
+        return _get_uom(res)
 
     return None
 
 
 def extract_unitary_measure(input_str: str) -> float:
-    input_str = clean_product_name(input_str)
+    input_str = clean_input_string(input_str)
 
     res = _re_search_end_of_string_first(RE.NUMBERxNUMBER_UOM, input_str)
     if res:
-        return get_number_only(res.group(0).replace(" ", "").split("x")[1])
+        return _get_number_only(res.group(0).replace(" ", "").split("x")[1])
 
     return None
 
 
 def extract_total_measure(input_str: str) -> float:
-    input_str = clean_product_name(input_str)
+    input_str = clean_input_string(input_str)
 
     res = _re_search_end_of_string_first(RE.NUMBERxNUMBER_UOM, input_str)
     if res:
@@ -62,12 +62,12 @@ def extract_total_measure(input_str: str) -> float:
 
     res = _re_search_end_of_string_first(RE.NUMBER_UOM, input_str)
     if res:
-        return get_number_only(res.group(0).replace(" ", ""))
+        return _get_number_only(res.group(0).replace(" ", ""))
 
     return None
 
 
-def pieces_words_in_name(product_name: str) -> bool:
+def _pieces_words_in_name(product_name: str) -> bool:
     return any([word in product_name for word in CN.PIECES_WORDS])
 
 
@@ -84,10 +84,10 @@ def _re_search_end_of_string_first(
     return res
 
 
-def get_number_only(number_and_uom: str) -> float:
+def _get_number_only(number_and_uom: str) -> float:
     return float("".join([c for c in number_and_uom if c.isdigit() or c == "."]))
 
 
-def get_uom(number_and_uom: str) -> str:
+def _get_uom(number_and_uom: str) -> str:
     res = re.search(rf"(({CN.RE_REGULAR_UOMS}))", number_and_uom)
     return res.group(0)
