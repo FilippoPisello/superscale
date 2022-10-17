@@ -34,7 +34,7 @@ def extract_units(input_str: str) -> int:
 def extract_unit_of_measure(product_name: str) -> str:
     product_name = clean_product_name(product_name)
 
-    re_basic_uoms_eos = rf"({RE.NUMBER}\s*({CN.RE_ALL_UOMS})$)"
+    re_basic_uoms_eos = rf"({RE.NUMBER}\s*({CN.RE_REGULAR_UOMS})$)"
     res = re.search(re_basic_uoms_eos, product_name)
     if res:
         res = res.group(0)
@@ -58,12 +58,12 @@ def extract_unitary_measure(product_name: str) -> float:
         return get_number_only(res)
 
     # try first to get from pieces form
-    re_basic_uoms_eos = rf"(\d+\s*x\s*({CN.RE_UNIT_QTY})\s*({CN.RE_ALL_UOMS}))"
+    re_basic_uoms_eos = rf"(\d+\s*x\s*({CN.RE_UNIT_QTY})\s*({CN.RE_REGULAR_UOMS}))"
     res = re.search(re_basic_uoms_eos, product_name)
     if res:
         return get_number_only(res.group(0).replace(" ", "").split("x")[1])
 
-    re_basic_uoms_eos = rf"(({CN.RE_UNIT_QTY})\s*({CN.RE_ALL_UOMS})$)"
+    re_basic_uoms_eos = rf"(({CN.RE_UNIT_QTY})\s*({CN.RE_REGULAR_UOMS})$)"
     res = re.search(re_basic_uoms_eos, product_name)
     if res:
         res = res.group(0)
@@ -80,7 +80,7 @@ def extract_unitary_measure(product_name: str) -> float:
 def extract_multiply_info(product_name: str) -> bool:
     product_name = clean_product_name(product_name)
 
-    re_basic_uoms_eos = rf"(\d+\s*x\s*({CN.RE_UNIT_QTY})\s*({CN.RE_ALL_UOMS}))"
+    re_basic_uoms_eos = rf"(\d+\s*x\s*({CN.RE_UNIT_QTY})\s*({CN.RE_REGULAR_UOMS}))"
     res = re.search(re_basic_uoms_eos, product_name)
     if res:
         return True
@@ -109,5 +109,5 @@ def get_number_only(number_and_uom: str) -> float:
 
 
 def get_uom(number_and_uom: str) -> str:
-    res = re.search(rf"(({CN.RE_ALL_UOMS}))", number_and_uom)
+    res = re.search(rf"(({CN.RE_REGULAR_UOMS}))", number_and_uom)
     return res.group(0)
