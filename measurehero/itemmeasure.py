@@ -1,4 +1,8 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
+
+from . import extractors as ext
 
 
 @dataclass
@@ -25,3 +29,12 @@ class ItemMeasure:
             self.unitary_measure = self.total_measure / self.units
         except TypeError:
             return
+
+    @classmethod
+    def from_string(cls, string: str) -> ItemMeasure:
+        return cls(
+            units=ext.extract_units(string),
+            unitary_measure=ext.extract_unitary_measure(string),
+            total_measure=ext.extract_total_measure(string),
+            unit_of_measure=ext.extract_unit_of_measure(string),
+        )
