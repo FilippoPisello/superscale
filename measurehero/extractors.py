@@ -42,43 +42,29 @@ def extract_unit_of_measure(input_str: str) -> str:
     return None
 
 
-def extract_unitary_measure(product_name: str) -> float:
-    product_name = clean_product_name(product_name)
+def extract_unitary_measure(input_str: str) -> float:
+    input_str = clean_product_name(input_str)
 
-    re_length = r"\d+ (metres|metre)"
-    res = re.search(re_length, product_name)
-    if res:
-        res = res.group(0)
-        return get_number_only(res)
-
-    # try first to get from pieces form
-    re_basic_uoms_eos = rf"(\d+\s*x\s*({CN.RE_UNIT_QTY})\s*({CN.RE_REGULAR_UOMS}))"
-    res = re.search(re_basic_uoms_eos, product_name)
+    res = _re_search_end_of_string_first(RE.NUMBERxNUMBER_UOM, input_str)
     if res:
         return get_number_only(res.group(0).replace(" ", "").split("x")[1])
-
-    re_basic_uoms_eos = rf"(({CN.RE_UNIT_QTY})\s*({CN.RE_REGULAR_UOMS})$)"
-    res = re.search(re_basic_uoms_eos, product_name)
-    if res:
-        res = res.group(0)
-        return get_number_only(res)
-
-    res = re.search(re_basic_uoms_eos.replace("$", ""), product_name)
-    if res:
-        res = res.group(0)
-        return get_number_only(res)
 
     return None
 
 
-def extract_multiply_info(product_name: str) -> bool:
-    product_name = clean_product_name(product_name)
+def extract_total_measure(input_str: str) -> float:
+    input_str = clean_product_name(input_str)
 
-    re_basic_uoms_eos = rf"(\d+\s*x\s*({CN.RE_UNIT_QTY})\s*({CN.RE_REGULAR_UOMS}))"
-    res = re.search(re_basic_uoms_eos, product_name)
+    res = _re_search_end_of_string_first(RE.NUMBERxNUMBER_UOM, input_str)
     if res:
-        return True
-    return False
+        substring = res.group(0).strip()
+        input_str = input_str.replace(substring, "")
+
+    res = _re_search_end_of_string_first(RE.NUMBER_UOM, input_str)
+    if res:
+        return get_number_only(res.group(0).replace(" ", ""))
+
+    return None
 
 
 def pieces_words_in_name(product_name: str) -> bool:

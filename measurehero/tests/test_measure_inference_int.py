@@ -28,7 +28,7 @@ def test_unit_of_measure_extraction(input_string, expected_unit_of_measure):
     ("input_string", "expected_unitary_measure"),
     TEST_CASES.unitary_measure,
 )
-def _test_unitary_measure_extraction(input_string, expected_unitary_measure):
+def test_unitary_measure_extraction(input_string, expected_unitary_measure):
     assert ext.extract_unitary_measure(input_string) == expected_unitary_measure
 
 
@@ -36,5 +36,5 @@ def _test_unitary_measure_extraction(input_string, expected_unitary_measure):
     ("input_string", "expected_total_measure"),
     TEST_CASES.total_measure,
 )
-def s_test_unitary_measure_extraction(input_string, expected_total_measure):
-    assert ext.extract_unitary_measure(input_string) == expected_total_measure
+def test_total_measure_extraction(input_string, expected_total_measure):
+    assert ext.extract_total_measure(input_string) == expected_total_measure
