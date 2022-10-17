@@ -1,10 +1,10 @@
 {
   "int": {
-    "ml": ["liter", 1000],
-    "cl": ["liter", 100]
+    "ml": { "convert_to": "liter", "ratio": 1000, "priority": 1 },
+    "cl": { "convert_to": "liter", "ratio": 100, "priority": 1 }
   },
   "fr": {
-    "litres": ["liter", 1],
-    "litre": ["liter", 1]
+    "litres": { "convert_to": "liter", "ratio": 1, "priority": 1 },
+    "litre": { "convert_to": "liter", "ratio": 1, "priority": 1 }
   }
 }

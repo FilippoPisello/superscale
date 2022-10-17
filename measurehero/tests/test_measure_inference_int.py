@@ -23,3 +23,18 @@ def test_units_extraction(input_string, expected_units):
 def test_unit_of_measure_extraction(input_string, expected_unit_of_measure):
     assert ext.extract_unit_of_measure(input_string) == expected_unit_of_measure
 
+
+@pytest.mark.parametrize(
+    ("input_string", "expected_unitary_measure"),
+    TEST_CASES.unitary_measure,
+)
+def _test_unitary_measure_extraction(input_string, expected_unitary_measure):
+    assert ext.extract_unitary_measure(input_string) == expected_unitary_measure
+
+
+@pytest.mark.parametrize(
+    ("input_string", "expected_total_measure"),
+    TEST_CASES.total_measure,
+)
+def s_test_unitary_measure_extraction(input_string, expected_total_measure):
+    assert ext.extract_unitary_measure(input_string) == expected_total_measure

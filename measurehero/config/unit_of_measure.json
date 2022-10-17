@@ -1,26 +1,31 @@
 {
   "int": {
-    "ml": ["liter", 1000],
-    "cl": ["liter", 100],
-    "l": ["liter", 1],
-    "liter": ["liter", 1],
-    "g": ["kilo", 1000],
-    "grams": ["kilo", 1000],
-    "kilo": ["kilo", 1],
-    "kg": ["kilo", 1],
-    "pcs": ["piece", 1],
-    "piece": ["piece", 1],
-    "pieces": ["piece", 1],
-    "unit": ["piece", 1],
-    "units": ["piece", 1],
-    "fruits": ["piece", 1]
+    "ml": { "convert_to": "liter", "ratio": 1000, "priority": 1 },
+    "cl": { "convert_to": "liter", "ratio": 100, "priority": 1 },
+    "l": { "convert_to": "liter", "ratio": 1, "priority": 1 },
+    "liter": { "convert_to": "liter", "ratio": 1, "priority": 1 },
+    "g": { "convert_to": "kilo", "ratio": 1000, "priority": 1 },
+    "grams": { "convert_to": "kilo", "ratio": 1000, "priority": 1 },
+    "kilo": { "convert_to": "kilo", "ratio": 1, "priority": 1 },
+    "kg": { "convert_to": "kilo", "ratio": 1, "priority": 1 },
+    "pcs": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+    "piece": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+    "pieces": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+    "unit": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+    "units": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+    "fruits": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+    "meter": { "convert_to": "meter", "ratio": 1, "priority": 2 },
+    "m": { "convert_to": "meter", "ratio": 1, "priority": 2 }
   },
   "fr": {
-    "litres": ["liter", 1],
-    "litre": ["liter", 1],
-    "gmes": ["kilo", 1000],
-    "unites": ["piece", 1],
-    "sachets": ["piece", 1],
-    "sachet": ["piece", 1]
+    "litres": { "convert_to": "liter", "ratio": 1, "priority": 1 },
+    "litre": { "convert_to": "liter", "ratio": 1, "priority": 1 },
+    "gmes": { "convert_to": "kilo", "ratio": 1000, "priority": 1 },
+    "unites": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+    "sachets": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+    "sachet": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+    "pochette": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+    "pochettes": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+    "metres": { "convert_to": "meter", "ratio": 1, "priority": 2 }
   }
 }

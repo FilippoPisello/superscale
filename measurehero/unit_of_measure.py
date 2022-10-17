@@ -1,0 +1,12 @@
+from dataclasses import dataclass
+
+
+@dataclass
+class UnitOfMeasure:
+    label: str
+    convert_to: str
+    ratio: int | float
+    priority: int = 1
+
+    def is_piece_measure(self):
+        return self.convert_to == "piece"
