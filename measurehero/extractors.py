@@ -31,16 +31,10 @@ def extract_units(input_str: str) -> int:
     return 1
 
 
-def extract_unit_of_measure(product_name: str) -> str:
-    product_name = clean_product_name(product_name)
+def extract_unit_of_measure(input_str: str) -> str:
+    input_str = clean_product_name(input_str)
 
-    re_basic_uoms_eos = rf"({RE.NUMBER}\s*({CN.RE_REGULAR_UOMS})$)"
-    res = re.search(re_basic_uoms_eos, product_name)
-    if res:
-        res = res.group(0)
-        return get_uom(res)
-
-    res = re.search(re_basic_uoms_eos.replace("$", ""), product_name)
+    res = _re_search_end_of_string_first(RE.NUMBER_UOM, input_str)
     if res:
         res = res.group(0)
         return get_uom(res)
