@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from measurehero.extractors import extract_measure_from_string
+from measurehero.extractor import extract_measure_from_string
 
 
 @dataclass
