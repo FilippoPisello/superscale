@@ -44,7 +44,7 @@ def test_units_pattern_3(input_string, expected):
 )
 def test_units_pattern_4(input_string, expected):
     actual = re.search(RE.NUMBER_UOM_xNUMBER, input_string)
-    assert actual.group(4) == expected
+    assert actual.group(3) == expected
 
 
 @pytest.mark.parametrize(
@@ -56,3 +56,14 @@ def test_units_pattern_4(input_string, expected):
 def test_unitary_measure_pattern_1(input_string, expected):
     actual = re.search(RE.NUMBERxNUMBER_UOM, input_string)
     assert actual.group(2) == expected
+
+
+@pytest.mark.parametrize(
+    ("input_string", "expected"),
+    [
+        ("aluminium rouleau 20 metres x 0.29 metres", "20"),
+    ],
+)
+def test_length_pattern_1(input_string, expected):
+    actual = re.search(RE.NUMBER_METERxNUMBER_METER, input_string)
+    assert actual.group(1) == expected

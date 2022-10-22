@@ -50,6 +50,22 @@ class PatternHandler(ABC):
         return res
 
 
+class HandlerNUMBER_METERxNUMBER_METER(PatternHandler):
+    def search_string(self) -> str:
+        res = self._re_search_end_of_string_first(
+            RE.NUMBER_METERxNUMBER_METER, self.string
+        )
+        if not res:
+            return
+
+        self.match = True
+
+        dim1 = float(res.group(1))
+        dim2 = float(res.group(3))
+        self.total_measure = max(dim1, dim2)
+        self.unit_of_measure = res.group(2)
+
+
 class HandlerNUMBERxNUMBER_UOM(PatternHandler):
     def search_string(self) -> str:
         res = self._re_search_end_of_string_first(RE.NUMBERxNUMBER_UOM, self.string)
@@ -71,8 +87,25 @@ class HandlerNUMBER_UOM_xNUMBER(PatternHandler):
 
         self.match = True
 
-        self.units = int(res.group(4))
+        self.units = int(res.group(3))
         self.unitary_measure = float(res.group(1))
+        self.unit_of_measure = res.group(2)
+
+
+class HandlerxNUMBER(PatternHandler):
+    def search_string(self) -> str:
+        res = self._re_search_end_of_string_first(RE.xNUMBER, self.string)
+        if not res:
+            return
+
+        self.match = True
+
+        self.units = int(res.group(1))
+
+        res = self._re_search_end_of_string_first(RE.NUMBER_UOM, self.string)
+        if not res:
+            return
+        self.total_measure = float(res.group(1))
         self.unit_of_measure = res.group(2)
 
 
@@ -88,17 +121,6 @@ class HandlerNUMBER_UOM(PatternHandler):
         self.unit_of_measure = res.group(2)
 
 
-class HandlerxNUMBER(PatternHandler):
-    def search_string(self) -> str:
-        res = self._re_search_end_of_string_first(RE.xNUMBER, self.string)
-        if not res:
-            return
-
-        self.match = True
-
-        self.units = int(res.group(1))
-
-
 class HandlerNUMBER_WITH_PIECES_WORD(PatternHandler):
     def search_string(self) -> str:
         if not self._pieces_words_in_name(self.string):
@@ -112,15 +134,22 @@ class HandlerNUMBER_WITH_PIECES_WORD(PatternHandler):
 
         self.units = int(res.group(1))
 
+        res = self._re_search_end_of_string_first(RE.NUMBER_UOM, self.string)
+        if not res:
+            return
+        self.total_measure = float(res.group(1))
+        self.unit_of_measure = res.group(2)
+
     @staticmethod
     def _pieces_words_in_name(product_name: str) -> bool:
         return any([word in product_name for word in CN.PIECES_WORDS])
 
 
 PATTERN_HANDLERS: list[type[PatternHandler]] = [
+    HandlerNUMBER_METERxNUMBER_METER,
     HandlerNUMBERxNUMBER_UOM,
     HandlerNUMBER_UOM_xNUMBER,
+    HandlerxNUMBER,
     HandlerNUMBER_WITH_PIECES_WORD,
     HandlerNUMBER_UOM,
-    HandlerxNUMBER,
 ]
