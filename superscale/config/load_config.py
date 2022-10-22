@@ -1,7 +1,7 @@
 import json
 from typing import Any
 
-from measurehero.unit_of_measure import UnitOfMeasure
+from superscale.unit_of_measure import UnitOfMeasure
 
 
 def load_region(file_path: str) -> list[str]:

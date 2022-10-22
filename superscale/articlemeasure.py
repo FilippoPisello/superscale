@@ -2,12 +2,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from measurehero import UOMS
-from measurehero.extractor import extract_measure_from_string
+from superscale import UOMS
+from superscale.extractor import extract_measure_from_string
 
 
 @dataclass
-class ItemMeasure:
+class ArticleMeasure:
     units: float = None
     unitary_measure: float = None
     total_measure: float = None
@@ -34,7 +34,7 @@ class ItemMeasure:
             return
 
     @classmethod
-    def from_string(cls, string: str) -> ItemMeasure:
+    def from_string(cls, string: str) -> ArticleMeasure:
         extraction = extract_measure_from_string(input_string=string)
 
         return cls(**extraction)

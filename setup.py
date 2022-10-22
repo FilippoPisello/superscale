@@ -4,12 +4,12 @@ with open("README.md", "r") as file:
     long_description = file.read()
 
 setup(
-    name="measurehero",
+    name="superscale",
     version="0.0.1",
     description="Extract measurement information from strings.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/FilippoPisello/MeasureHero",
+    url="https://github.com/FilippoPisello/SuperScale",
     author="Filippo Pisello",
     author_email="filippo.pisello@live.it",
     license="MIT",

@@ -1,6 +1,6 @@
 from typing import Any
 
-from measurehero.pattern_handlers import PATTERN_HANDLERS
+from superscale.pattern_handlers import PATTERN_HANDLERS
 
 
 def extract_measure_from_string(input_string) -> dict[str, Any]:

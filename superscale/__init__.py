@@ -1,3 +1,3 @@
 from .config import REGION, UOMS
-from .itemmeasure import ItemMeasure
+from .articlemeasure import ArticleMeasure
 from .unit_of_measure import UnitOfMeasure

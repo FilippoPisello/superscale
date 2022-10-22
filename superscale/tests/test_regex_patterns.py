@@ -2,7 +2,7 @@ import re
 
 import pytest
 
-from measurehero import regex_strings as RE
+from superscale import regex_strings as RE
 
 
 @pytest.mark.parametrize(

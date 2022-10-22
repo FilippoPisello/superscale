@@ -1,6 +1,6 @@
 import pandas as pd
 
-from measurehero.itemmeasure import ItemMeasure
+from superscale.articlemeasure import ArticleMeasure
 
 from .load_test_cases import _test_cases_to_custom_object
 
@@ -16,5 +16,8 @@ def test_custom_test_cases_object_with_expected_input():
         }
     )
     test_cases = _test_cases_to_custom_object(df)
-    expected = [("A", ItemMeasure(1, 3, 5, "kg")), ("B", ItemMeasure(2, 4, None, "g"))]
+    expected = [
+        ("A", ArticleMeasure(1, 3, 5, "kg")),
+        ("B", ArticleMeasure(2, 4, None, "g")),
+    ]
     assert test_cases == expected

@@ -1,4 +1,4 @@
-from measurehero import UOMS
+from superscale import UOMS
 
 REGULAR_UOMS = []
 LENGTH_UOMS = []
