@@ -24,6 +24,9 @@ def extract_units(input_str: str) -> int:
     if res:
         return int(res.group(1))
 
+    res = _re_search_end_of_string_first(RE.NUMBER_UOM_xNUMBER, input_str)
+    if res:
+        return int(res.group(4))
 
     res = re.search(RE.xNUMBER, input_str)
     if res:
@@ -49,6 +52,10 @@ def extract_unitary_measure(input_str: str) -> float:
     if res:
         return float(res.group(2))
 
+    res = _re_search_end_of_string_first(RE.NUMBER_UOM_xNUMBER, input_str)
+    if res:
+        return int(res.group(1))
+
     return None
 
 
@@ -56,6 +63,11 @@ def extract_total_measure(input_str: str) -> float:
     input_str = clean_input_string(input_str)
 
     res = _re_search_end_of_string_first(RE.NUMBERxNUMBER_UOM, input_str)
+    if res:
+        substring = res.group(0).strip()
+        input_str = input_str.replace(substring, "")
+
+    res = _re_search_end_of_string_first(RE.NUMBER_UOM_xNUMBER, input_str)
     if res:
         substring = res.group(0).strip()
         input_str = input_str.replace(substring, "")
