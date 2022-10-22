@@ -15,18 +15,19 @@ def extract_units(input_str: str) -> int:
     if _pieces_words_in_name(input_str):
         res = re.search(RE.xNUMBER, input_str)
         if res:
-            return int(res.group(0).replace(" ", "").replace("x", ""))
-        res = re.search(r"(\s*\d+)", input_str)
+            return int(res.group(1))
+        res = re.search(r"\s*(\d+)", input_str)
         if res:
-            return int(res.group(0).replace(" ", ""))
+            return int(res.group(1))
 
     res = _re_search_end_of_string_first(RE.NUMBERxNUMBER_UOM, input_str)
     if res:
-        return int(res.group(0).replace(" ", "").split("x")[0])
+        return int(res.group(1))
+
 
     res = re.search(RE.xNUMBER, input_str)
     if res:
-        return int(res.group(0).replace(" ", "").replace("x", ""))
+        return int(res.group(1))
 
     return 1
 
@@ -36,8 +37,7 @@ def extract_unit_of_measure(input_str: str) -> str:
 
     res = _re_search_end_of_string_first(RE.NUMBER_UOM, input_str)
     if res:
-        res = res.group(0)
-        return _get_uom(res)
+        return res.group(2)
 
     return None
 
@@ -47,7 +47,7 @@ def extract_unitary_measure(input_str: str) -> float:
 
     res = _re_search_end_of_string_first(RE.NUMBERxNUMBER_UOM, input_str)
     if res:
-        return _get_number_only(res.group(0).replace(" ", "").split("x")[1])
+        return float(res.group(2))
 
     return None
 
@@ -62,7 +62,7 @@ def extract_total_measure(input_str: str) -> float:
 
     res = _re_search_end_of_string_first(RE.NUMBER_UOM, input_str)
     if res:
-        return _get_number_only(res.group(0).replace(" ", ""))
+        return float(res.group(1))
 
     return None
 
@@ -82,12 +82,3 @@ def _re_search_end_of_string_first(
 
     res = re.search(pattern, input_str)
     return res
-
-
-def _get_number_only(number_and_uom: str) -> float:
-    return float("".join([c for c in number_and_uom if c.isdigit() or c == "."]))
-
-
-def _get_uom(number_and_uom: str) -> str:
-    res = re.search(rf"(({CN.RE_REGULAR_UOMS}))", number_and_uom)
-    return res.group(0)
