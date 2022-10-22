@@ -9,7 +9,12 @@ def load_region(file_path: str) -> list[str]:
     return content["region"]
 
 
-def load_uoms(file_path: str, region: list[str]) -> list[UnitOfMeasure]:
+def _load_json_from_path(file_path: str) -> dict[Any, Any]:
+    with open(file_path) as f:
+        return json.load(f)
+
+
+def load_uoms(file_path: str, region: list[str]) -> dict[str, UnitOfMeasure]:
     content = _load_json_from_path(file_path)
 
     all_uoms = dict()
@@ -28,18 +33,15 @@ def _sort_uoms_by_label_length_descending(uoms_dict):
     }
 
 
-def _uoms_dict_to_custom_objects(uoms_dict: dict[str, dict]) -> list[UnitOfMeasure]:
-    return [
-        UnitOfMeasure(
+def _uoms_dict_to_custom_objects(
+    uoms_dict: dict[str, dict]
+) -> dict[str, UnitOfMeasure]:
+    return {
+        uom: UnitOfMeasure(
             label=uom,
             convert_to=data["convert_to"],
             ratio=data["ratio"],
             priority=data["priority"],
         )
         for uom, data in uoms_dict.items()
-    ]
-
-
-def _load_json_from_path(file_path: str) -> dict[Any, Any]:
-    with open(file_path) as f:
-        return json.load(f)
+    }

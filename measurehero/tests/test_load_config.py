@@ -10,20 +10,20 @@ def test_region_is_parsed_from_config():
 def test_unit_of_measure_is_parsed_from_config_with_one_region():
     file_path = r"measurehero\tests\test_data\unit_of_measure.json"
     actual = config.load_uoms(file_path, ["int"])
-    expected = [
-        UnitOfMeasure("ml", "liter", 1000, 1),
-        UnitOfMeasure("cl", "liter", 100, 1),
-    ]
+    expected = {
+        "ml": UnitOfMeasure("ml", "liter", 1000, 1),
+        "cl": UnitOfMeasure("cl", "liter", 100, 1),
+    }
     assert actual == expected
 
 
 def test_unit_of_measure_is_parsed_from_config_with_two_regions():
     file_path = r"measurehero\tests\test_data\unit_of_measure.json"
     actual = config.load_uoms(file_path, ["int", "fr"])
-    expected = [
-        UnitOfMeasure("litres", "liter", 1, 1),
-        UnitOfMeasure("litre", "liter", 1, 1),
-        UnitOfMeasure("ml", "liter", 1000, 1),
-        UnitOfMeasure("cl", "liter", 100, 1),
-    ]
+    expected = {
+        "litres": UnitOfMeasure("litres", "liter", 1, 1),
+        "litre": UnitOfMeasure("litre", "liter", 1, 1),
+        "ml": UnitOfMeasure("ml", "liter", 1000, 1),
+        "cl": UnitOfMeasure("cl", "liter", 100, 1),
+    }
     assert actual == expected

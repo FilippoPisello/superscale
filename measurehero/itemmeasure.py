@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from measurehero import UOMS
 from measurehero.extractor import extract_measure_from_string
 
 
@@ -37,3 +38,12 @@ class ItemMeasure:
         extraction = extract_measure_from_string(input_string=string)
 
         return cls(**extraction)
+
+    def convert(self) -> None:
+        try:
+            uom_object = UOMS[self.unit_of_measure]
+        except KeyError:
+            return
+        self.unit_of_measure = uom_object.convert_to
+        self.unitary_measure = self.unitary_measure / uom_object.ratio
+        self.total_measure = self.total_measure / uom_object.ratio

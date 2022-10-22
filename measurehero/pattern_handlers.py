@@ -142,7 +142,7 @@ class HandlerNUMBER_WITH_PIECES_WORD(PatternHandler):
 
     @staticmethod
     def _pieces_words_in_name(product_name: str) -> bool:
-        return any([word in product_name for word in CN.PIECES_WORDS])
+        return any([word in product_name for word in CN.PIECES_UOMS])
 
 
 PATTERN_HANDLERS: list[type[PatternHandler]] = [
