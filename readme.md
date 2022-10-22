@@ -1,7 +1,7 @@
 # SuperScale: extract measurements from strings
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/release/python-3100/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![GitHub license](https://badgen.net/github/license/FilippoPisello/superscale)](https://github.com/FilippoPisello/superscale/blob/main/LICENSE)
+[![GitHub license](https://badgen.net/github/license/FilippoPisello/SuperScale)](https://github.com/FilippoPisello/SuperScale/blob/main/LICENSE)
 ## What is it?
 SuperScale allows you to parse units, weight and unit of measure from strings. It is built for groceries so it works at its best with names of supermarket
 articles.
