@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from . import extractors as ext
+from measurehero.extractors import extract_measure_from_string
 
 
 @dataclass
@@ -11,10 +11,12 @@ class ItemMeasure:
     unitary_measure: float = None
     total_measure: float = None
     unit_of_measure: str = None
+    infer = True
 
     def __post_init__(self):
-        self.fill_in_total_measure()
-        self.fill_in_unitary_measure()
+        if self.infer:
+            self.fill_in_total_measure()
+            self.fill_in_unitary_measure()
 
     def fill_in_total_measure(self) -> None:
         if self.total_measure is not None:
@@ -32,9 +34,6 @@ class ItemMeasure:
 
     @classmethod
     def from_string(cls, string: str) -> ItemMeasure:
-        return cls(
-            units=ext.extract_units(string),
-            unitary_measure=ext.extract_unitary_measure(string),
-            total_measure=ext.extract_total_measure(string),
-            unit_of_measure=ext.extract_unit_of_measure(string),
-        )
+        extraction = extract_measure_from_string(input_string=string)
+
+        return cls(**extraction)
