@@ -2,24 +2,24 @@ from typing import Any
 
 import pandas as pd
 
-from superscale.articlemeasure import ArticleMeasure
+from superscale.itemmeasure import ItemMeasure
 
 
-def load_test_cases(localization_code: str) -> list[tuple[str, ArticleMeasure]]:
+def load_test_cases(localization_code: str) -> list[tuple[str, ItemMeasure]]:
     """Load test cases from the proper excel file."""
     file_path = _get_test_cases_file_path_per_localization(localization_code)
     df = pd.read_excel(file_path)
     return _test_cases_to_custom_object(df)
 
 
-def _test_cases_to_custom_object(df: pd.DataFrame) -> list[tuple[str, ArticleMeasure]]:
+def _test_cases_to_custom_object(df: pd.DataFrame) -> list[tuple[str, ItemMeasure]]:
     test_cases = []
-    ArticleMeasure.infer = False
+    ItemMeasure.infer = False
 
     for row in df.itertuples(index=False):
 
         input_string = _none_if_null(row.input_string)
-        test_case = ArticleMeasure(
+        test_case = ItemMeasure(
             units=_none_if_null(row.units),
             unitary_measure=_none_if_null(row.unitary_measure),
             total_measure=_none_if_null(row.total_measure),
