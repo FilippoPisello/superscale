@@ -2,22 +2,13 @@ import pandas as pd
 
 from superscale.itemmeasure import ItemMeasure
 
-from .load_test_cases import _test_cases_to_custom_object
+from .load_test_cases import load_test_cases
 
 
-def test_custom_test_cases_object_with_expected_input():
-    df = pd.DataFrame(
-        {
-            "input_string": ["A", "B"],
-            "units": [1, 2],
-            "unitary_measure": [3, 4],
-            "total_measure": [5, None],
-            "unit_of_measure": ["kg", "g"],
-        }
-    )
-    test_cases = _test_cases_to_custom_object(df)
-    expected = [
-        ("A", ItemMeasure(1, 3, 5, "kg")),
-        ("B", ItemMeasure(2, 4, None, "g")),
-    ]
-    assert test_cases == expected
+def test_test_cases_loaded_into_proper_data_structure():
+    test_cases = load_test_cases("fr")
+
+    assert isinstance(test_cases, list)
+    assert isinstance(test_cases[0], tuple)
+    assert isinstance(test_cases[0][0], str)
+    assert isinstance(test_cases[0][1], ItemMeasure)
