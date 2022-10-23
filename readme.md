@@ -34,6 +34,8 @@ unit_of_measure='g')
 ItemMeasure(units=5, unitary_measure=None, total_measure=None, unit_of_measure=None)
 >>> superscale.scrape_measures("Coca-cola zero 1l")
 ItemMeasure(units=1, unitary_measure=1.0, total_measure=1.0, unit_of_measure='l')
+>>> superscale.scrape_measures("Olive oil 1/2 liter")
+ItemMeasure(units=1, unitary_measure=0.5, total_measure=0.5, unit_of_measure='liter')
 ```
 The package also supports simple conversion to standard unit of measures:
 ```python
