@@ -1,4 +1,4 @@
-from . import load_config as config
+from .load_config import Config
 
-REGION = config.load_region(r"superscale\config\region.json")
-UOMS = config.load_uoms(r"superscale\config\unit_of_measure.json", REGION)
+CONFIG = Config(r"superscale\config\config.json")
+CONFIG.load()

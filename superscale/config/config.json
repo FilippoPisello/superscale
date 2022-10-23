@@ -1,0 +1,35 @@
+{
+  "region": ["int", "fr"],
+  "multipack_symbols": ["x", "*"],
+  "units_of_measure": {
+    "int": {
+      "ml": { "convert_to": "liter", "ratio": 1000, "priority": 1 },
+      "cl": { "convert_to": "liter", "ratio": 100, "priority": 1 },
+      "l": { "convert_to": "liter", "ratio": 1, "priority": 1 },
+      "liter": { "convert_to": "liter", "ratio": 1, "priority": 1 },
+      "g": { "convert_to": "kilo", "ratio": 1000, "priority": 1 },
+      "grams": { "convert_to": "kilo", "ratio": 1000, "priority": 1 },
+      "kilo": { "convert_to": "kilo", "ratio": 1, "priority": 1 },
+      "kg": { "convert_to": "kilo", "ratio": 1, "priority": 1 },
+      "pcs": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+      "piece": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+      "pieces": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+      "unit": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+      "units": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+      "fruits": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+      "meter": { "convert_to": "meter", "ratio": 1, "priority": 2 },
+      "m": { "convert_to": "meter", "ratio": 1, "priority": 2 }
+    },
+    "fr": {
+      "litres": { "convert_to": "liter", "ratio": 1, "priority": 1 },
+      "litre": { "convert_to": "liter", "ratio": 1, "priority": 1 },
+      "gmes": { "convert_to": "kilo", "ratio": 1000, "priority": 1 },
+      "unites": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+      "sachets": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+      "sachet": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+      "pochette": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+      "pochettes": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+      "metres": { "convert_to": "meter", "ratio": 1, "priority": 2 }
+    }
+  }
+}

@@ -1,10 +1,10 @@
-from superscale import UOMS
+from superscale import CONFIG
 
 REGULAR_UOMS = []
 LENGTH_UOMS = []
 PIECES_UOMS = []
 
-for _, uom in UOMS.items():
+for _, uom in CONFIG.units_of_measure.items():
     if uom.is_piece_measure():
         PIECES_UOMS.append(uom.label)
         continue

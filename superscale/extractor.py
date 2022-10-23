@@ -1,9 +1,10 @@
 from typing import Any
 
+from superscale import CONFIG
 from superscale.pattern_handlers import PATTERN_HANDLERS
 
 
-def extract_measure_from_string(input_string) -> dict[str, Any]:
+def extract_measure_from_string(input_string: str) -> dict[str, Any]:
     input_string = clean_input_string(input_string)
 
     measure_dict = {
@@ -27,4 +28,7 @@ def extract_measure_from_string(input_string) -> dict[str, Any]:
 
 
 def clean_input_string(input_str: str) -> str:
-    return input_str.replace(",", ".").replace("*", "x").strip().lower()
+    input_str = input_str.replace(",", ".").strip().lower()
+    for character in CONFIG.multipack_symbols:
+        input_str = input_str.replace(character, "x")
+    return input_str
