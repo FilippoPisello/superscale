@@ -142,6 +142,17 @@ class HandlerFRACTION_UOM(PatternHandler):
         self.unit_of_measure = res.group(3)
 
 
+class HandlerNUMBER(PatternHandler):
+    def search_string(self) -> str:
+        res = re.search(RE.NUMBER, self.string)
+        if not res:
+            return
+
+        self.match = True
+
+        self.units = int(res.group(1))
+
+
 PATTERN_HANDLERS: list[type[PatternHandler]] = [
     HandlerNUMBER_METERxNUMBER_METER,
     HandlerNUMBERxNUMBER_UOM,
@@ -150,4 +161,5 @@ PATTERN_HANDLERS: list[type[PatternHandler]] = [
     HandlerNUMBER_WITH_PIECES_WORD,
     HandlerFRACTION_UOM,
     HandlerNUMBER_UOM,
+    HandlerNUMBER,
 ]
