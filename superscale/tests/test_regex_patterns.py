@@ -67,3 +67,10 @@ def test_unitary_measure_pattern_1(input_string, expected):
 def test_length_pattern_1(input_string, expected):
     actual = re.search(RE.NUMBER_METERxNUMBER_METER, input_string)
     assert actual.group(1) == expected
+
+
+def test_fraction_pattern():
+    actual = re.search(RE.FRACTION_UOM, "huile d'olive u 1/2 litre")
+    assert actual.group(1) == "1"
+    assert actual.group(2) == "2"
+    assert actual.group(3) == "litre"

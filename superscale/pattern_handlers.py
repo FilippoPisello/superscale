@@ -36,25 +36,10 @@ class PatternHandler(ABC):
     def get_unit_of_measure(self) -> str:
         return self.unit_of_measure
 
-    @staticmethod
-    def _re_search_end_of_string_first(
-        pattern: str, input_str: str
-    ) -> re.Match[str] | None:
-        """Apply re.search first at the end input_string. If no match, apply with
-        no constraint."""
-        res = re.search(pattern + "$", input_str)
-        if res:
-            return res
-
-        res = re.search(pattern, input_str)
-        return res
-
 
 class HandlerNUMBER_METERxNUMBER_METER(PatternHandler):
     def search_string(self) -> str:
-        res = self._re_search_end_of_string_first(
-            RE.NUMBER_METERxNUMBER_METER, self.string
-        )
+        res = re.search(RE.NUMBER_METERxNUMBER_METER, self.string)
         if not res:
             return
 
@@ -68,7 +53,7 @@ class HandlerNUMBER_METERxNUMBER_METER(PatternHandler):
 
 class HandlerNUMBERxNUMBER_UOM(PatternHandler):
     def search_string(self) -> str:
-        res = self._re_search_end_of_string_first(RE.NUMBERxNUMBER_UOM, self.string)
+        res = re.search(RE.NUMBERxNUMBER_UOM, self.string)
         if not res:
             return
 
@@ -81,7 +66,7 @@ class HandlerNUMBERxNUMBER_UOM(PatternHandler):
 
 class HandlerNUMBER_UOM_xNUMBER(PatternHandler):
     def search_string(self) -> str:
-        res = self._re_search_end_of_string_first(RE.NUMBER_UOM_xNUMBER, self.string)
+        res = re.search(RE.NUMBER_UOM_xNUMBER, self.string)
         if not res:
             return
 
@@ -94,7 +79,7 @@ class HandlerNUMBER_UOM_xNUMBER(PatternHandler):
 
 class HandlerxNUMBER(PatternHandler):
     def search_string(self) -> str:
-        res = self._re_search_end_of_string_first(RE.xNUMBER, self.string)
+        res = re.search(RE.xNUMBER, self.string)
         if not res:
             return
 
@@ -102,7 +87,7 @@ class HandlerxNUMBER(PatternHandler):
 
         self.units = int(res.group(1))
 
-        res = self._re_search_end_of_string_first(RE.NUMBER_UOM, self.string)
+        res = re.search(RE.NO_SYMBOL_NUMBER_UOM, self.string)
         if not res:
             return
         self.total_measure = float(res.group(1))
@@ -111,7 +96,7 @@ class HandlerxNUMBER(PatternHandler):
 
 class HandlerNUMBER_UOM(PatternHandler):
     def search_string(self) -> str:
-        res = self._re_search_end_of_string_first(RE.NUMBER_UOM, self.string)
+        res = re.search(RE.NO_SYMBOL_NUMBER_UOM, self.string)
         if not res:
             return
 
@@ -134,7 +119,7 @@ class HandlerNUMBER_WITH_PIECES_WORD(PatternHandler):
 
         self.units = int(res.group(1))
 
-        res = self._re_search_end_of_string_first(RE.NUMBER_UOM, self.string)
+        res = re.search(RE.NUMBER_UOM, self.string)
         if not res:
             return
         self.total_measure = float(res.group(1))
@@ -145,11 +130,24 @@ class HandlerNUMBER_WITH_PIECES_WORD(PatternHandler):
         return any([word in product_name for word in CN.PIECES_UOMS])
 
 
+class HandlerFRACTION_UOM(PatternHandler):
+    def search_string(self) -> str:
+        res = re.search(RE.FRACTION_UOM, self.string)
+        if not res:
+            return
+
+        self.match = True
+
+        self.total_measure = float(res.group(1)) / float(res.group(2))
+        self.unit_of_measure = res.group(3)
+
+
 PATTERN_HANDLERS: list[type[PatternHandler]] = [
     HandlerNUMBER_METERxNUMBER_METER,
     HandlerNUMBERxNUMBER_UOM,
     HandlerNUMBER_UOM_xNUMBER,
     HandlerxNUMBER,
     HandlerNUMBER_WITH_PIECES_WORD,
+    HandlerFRACTION_UOM,
     HandlerNUMBER_UOM,
 ]
