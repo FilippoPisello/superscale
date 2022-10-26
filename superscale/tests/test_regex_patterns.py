@@ -74,3 +74,8 @@ def test_fraction_pattern():
     assert actual.group(1) == "1"
     assert actual.group(2) == "2"
     assert actual.group(3) == "litre"
+
+
+def test_kilo_pattern():
+    actual = re.search(RE.ISOLATED_KILO, "frites u sachet kg")
+    assert actual.group(1) == "kg"

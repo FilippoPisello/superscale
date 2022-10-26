@@ -114,6 +114,8 @@ class HandlerNUMBER_WITH_PIECES_WORD(PatternHandler):
         res = re.search(r"\s*(\d+)", self.string)
         if not res:
             res = re.search(RE.xNUMBER, self.string)
+            if not res:
+                return
 
         self.match = True
 
@@ -153,6 +155,18 @@ class HandlerNUMBER(PatternHandler):
         self.units = float(res.group(1))
 
 
+class HandlerISOLATED_KILO(PatternHandler):
+    def search_string(self) -> str:
+        res = re.search(RE.ISOLATED_KILO, self.string)
+        if not res:
+            return
+
+        self.match = True
+
+        self.total_measure = 1
+        self.unit_of_measure = res.group(1)
+
+
 PATTERN_HANDLERS: list[type[PatternHandler]] = [
     HandlerNUMBER_METERxNUMBER_METER,
     HandlerNUMBERxNUMBER_UOM,
@@ -162,4 +176,5 @@ PATTERN_HANDLERS: list[type[PatternHandler]] = [
     HandlerFRACTION_UOM,
     HandlerNUMBER_UOM,
     HandlerNUMBER,
+    HandlerISOLATED_KILO,
 ]
