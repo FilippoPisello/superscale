@@ -1,5 +1,3 @@
-import pandas as pd
-
 from superscale.itemmeasure import ItemMeasure
 
 from .load_test_cases import load_test_cases
