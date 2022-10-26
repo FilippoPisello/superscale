@@ -3,11 +3,11 @@ from . import constants as CN
 # For every variable comment expresses patterns to be matched
 
 # General
-NUMBER = "(\d+\.\d+|\d+)"  # number with or without decimals
-FRACTION = "(\d+)/(\d+)"  # 1/3 | 10/30 | 1/30 | 30/5
+NUMBER = r"(\d+\.\d+|\d+)"  # number with or without decimals
+FRACTION = r"(\d+)/(\d+)"  # 1/3 | 10/30 | 1/30 | 30/5
 
 NUMBER_UOM = rf"{NUMBER}\s*({CN.RE_REGULAR_UOMS})(?:$|\s)"  # 30g | 30 g | 30.0 g
-NO_SYMBOL_NUMBER_UOM = rf"(?:^|\s|[a-z]){NUMBER_UOM}"  # like above but NOT 15|30kg
+NO_SYMBOL_NUMBER_UOM = rf"(?:^|\s|[a-z]|[a-z].){NUMBER_UOM}"  # NOT 15/30kg | A/30kg 
 FRACTION_UOM = rf"{FRACTION}\s*({CN.RE_REGULAR_UOMS})(?:$|\s)"
 
 NUMBERx = r"(\d+)\s*x\s*"  # 30x | 30 x
