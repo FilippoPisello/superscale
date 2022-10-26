@@ -1,4 +1,5 @@
 import csv
+from pathlib import Path
 from typing import Any, Type
 
 from superscale.itemmeasure import ItemMeasure
@@ -36,7 +37,9 @@ def _test_cases_to_custom_object(file_path: str) -> list[tuple[str, ItemMeasure]
 
 
 def _get_test_cases_file_path_per_localization(localization_code: str) -> str:
-    return rf"superscale\tests\test_data\test_cases_{localization_code}.csv"
+    _current_dir = Path(__file__).parent.resolve()
+    suffix = rf"test_data\test_cases_{localization_code}.csv"
+    return Path(_current_dir / suffix)
 
 
 def _coerce_to_type(value: Any, type: Type) -> Any:

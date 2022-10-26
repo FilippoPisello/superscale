@@ -1,5 +1,6 @@
 import json
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
 from superscale.exceptions import UnitOfMeasureNotFoundError
@@ -8,7 +9,7 @@ from superscale.unit_of_measure import UnitOfMeasure
 
 @dataclass
 class Config:
-    config_file_path: str
+    config_file_path: Path
 
     def load(self) -> None:
         """Overwrite current settings with content of config.json"""
