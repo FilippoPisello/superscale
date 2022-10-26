@@ -13,7 +13,8 @@ FRACTION_UOM = rf"{FRACTION}\s*({CN.RE_REGULAR_UOMS})(?:$|\s)"
 NUMBER_UOM_LETTER = rf"{NUMBER}\s*({CN.RE_REGULAR_UOMS})(?:$|\s|[a-z])"  # 30gA | 30 gA | 30.0 gA
 
 NUMBERx = r"(\d+)\s*x\s*"  # 30x | 30 x
-xNUMBER = r"(?<!\d)x\s*(\d+)(?:$|\s)"  # 'x30' | 'x 30' | NOT '10x30' | NOT 'x30.3'
+xNUMBER = r"(?<!\d)x\s*(\d+)(?:$|\s|[a-z])"  # 'x30' | 'x 30' | NOT '10x30' | NOT 'x30.3'
+xNUMBER_LETTER = r"(?<!\d)x\s*(\d+)(?:$|\s)"  # 'x30' | 'x 30' | NOT '10x30' | NOT 'x30.3'
 
 NUMBERxNUMBER_UOM = rf"{NUMBERx}{NUMBER_UOM}"  # 20x30g | 20 x 30g | 20x32.5g
 NUMBER_UOM_xNUMBER = rf"{NUMBER_UOM}{xNUMBER}"  # 30g x 2 | 30gx2 | 32.5gx20

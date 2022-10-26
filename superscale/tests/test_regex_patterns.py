@@ -29,6 +29,7 @@ def test_units_pattern_2(input_string, expected):
     ("input_string", "expected"),
     [
         ("couches baby dry pants pampers geant taille 7 x30", "30"),
+        ("saum.fume norv.labeyr.x2tr 75g", "2"),
     ],
 )
 def test_units_pattern_3(input_string, expected):

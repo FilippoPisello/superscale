@@ -179,11 +179,29 @@ class HandlerNUMBER_UOM_LETTER(PatternHandler):
         self.unit_of_measure = res.group(2)
 
 
+class HandlerxNUMBER_LETTER(PatternHandler):
+    def search_string(self) -> str:
+        res = re.search(RE.xNUMBER_LETTER, self.string)
+        if not res:
+            return
+
+        self.match = True
+
+        self.units = float(res.group(1))
+
+        res = re.search(RE.NO_SYMBOL_NUMBER_UOM, self.string)
+        if not res:
+            return
+        self.total_measure = float(res.group(1))
+        self.unit_of_measure = res.group(2)
+
+
 PATTERN_HANDLERS: list[type[PatternHandler]] = [
     HandlerNUMBER_METERxNUMBER_METER,
     HandlerNUMBERxNUMBER_UOM,
     HandlerNUMBER_UOM_xNUMBER,
     HandlerxNUMBER,
+    HandlerxNUMBER_LETTER,
     HandlerNUMBER_WITH_PIECES_WORD,
     HandlerFRACTION_UOM,
     HandlerNUMBER_UOM,
