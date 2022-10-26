@@ -8,7 +8,9 @@
       "l": { "convert_to": "liter", "ratio": 1, "priority": 1 },
       "liter": { "convert_to": "liter", "ratio": 1, "priority": 1 },
       "g": { "convert_to": "kilo", "ratio": 1000, "priority": 1 },
+      "gr": { "convert_to": "kilo", "ratio": 1000, "priority": 1 },
       "grams": { "convert_to": "kilo", "ratio": 1000, "priority": 1 },
+      "gmes": { "convert_to": "kilo", "ratio": 1000, "priority": 1 },
       "kilo": { "convert_to": "kilo", "ratio": 1, "priority": 1 },
       "kg": { "convert_to": "kilo", "ratio": 1, "priority": 1 },
       "pcs": { "convert_to": "piece", "ratio": 1, "priority": 1 },
@@ -17,6 +19,8 @@
       "unit": { "convert_to": "piece", "ratio": 1, "priority": 1 },
       "units": { "convert_to": "piece", "ratio": 1, "priority": 1 },
       "fruits": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+      "portion": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+      "portions": { "convert_to": "piece", "ratio": 1, "priority": 1 },
       "meter": { "convert_to": "meter", "ratio": 1, "priority": 2 },
       "m": { "convert_to": "meter", "ratio": 1, "priority": 2 }
     },

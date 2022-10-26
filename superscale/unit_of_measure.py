@@ -15,3 +15,9 @@ class UnitOfMeasure:
 
     def is_length_measure(self) -> bool:
         return self.convert_to == "meter"
+
+    def is_weight_measure(self) -> bool:
+        return self.convert_to == "kilo"
+
+    def is_kilo_synonym(self) -> bool:
+        return (self.convert_to == "kilo") and (self.ratio == 1)

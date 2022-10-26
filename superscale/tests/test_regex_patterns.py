@@ -29,6 +29,7 @@ def test_units_pattern_2(input_string, expected):
     ("input_string", "expected"),
     [
         ("couches baby dry pants pampers geant taille 7 x30", "30"),
+        ("saum.fume norv.labeyr.x2tr 75g", "2"),
     ],
 )
 def test_units_pattern_3(input_string, expected):
@@ -74,3 +75,8 @@ def test_fraction_pattern():
     assert actual.group(1) == "1"
     assert actual.group(2) == "2"
     assert actual.group(3) == "litre"
+
+
+def test_kilo_pattern():
+    actual = re.search(RE.ISOLATED_KILO, "frites u sachet kg")
+    assert actual.group(1) == "kg"
