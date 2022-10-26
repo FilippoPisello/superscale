@@ -9,6 +9,7 @@
       "liter": { "convert_to": "liter", "ratio": 1, "priority": 1 },
       "g": { "convert_to": "kilo", "ratio": 1000, "priority": 1 },
       "grams": { "convert_to": "kilo", "ratio": 1000, "priority": 1 },
+      "gmes": { "convert_to": "kilo", "ratio": 1000, "priority": 1 },
       "kilo": { "convert_to": "kilo", "ratio": 1, "priority": 1 },
       "kg": { "convert_to": "kilo", "ratio": 1, "priority": 1 },
       "pcs": { "convert_to": "piece", "ratio": 1, "priority": 1 },
