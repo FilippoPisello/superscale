@@ -19,6 +19,8 @@
       "unit": { "convert_to": "piece", "ratio": 1, "priority": 1 },
       "units": { "convert_to": "piece", "ratio": 1, "priority": 1 },
       "fruits": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+      "portion": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+      "portions": { "convert_to": "piece", "ratio": 1, "priority": 1 },
       "meter": { "convert_to": "meter", "ratio": 1, "priority": 2 },
       "m": { "convert_to": "meter", "ratio": 1, "priority": 2 }
     },
