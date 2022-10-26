@@ -63,7 +63,7 @@ def scrape_measures(text: str) -> ItemMeasure:
         >>> import superscale
         >>> article = "Heinz Baked Beans In Tomato Sauce 4X415g"
         >>> superscale.scrape_measures(article)
-        ItemMeasure(units=4, unitary_measure=415.0, total_measure=1660.0,
+        ItemMeasure(units=4.0, unitary_measure=415.0, total_measure=1660.0,
         unit_of_measure='g')
     """
     return ItemMeasure.from_string(text)

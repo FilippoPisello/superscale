@@ -59,7 +59,7 @@ class HandlerNUMBERxNUMBER_UOM(PatternHandler):
 
         self.match = True
 
-        self.units = int(res.group(1))
+        self.units = float(res.group(1))
         self.unitary_measure = float(res.group(2))
         self.unit_of_measure = res.group(3)
 
@@ -72,7 +72,7 @@ class HandlerNUMBER_UOM_xNUMBER(PatternHandler):
 
         self.match = True
 
-        self.units = int(res.group(3))
+        self.units = float(res.group(3))
         self.unitary_measure = float(res.group(1))
         self.unit_of_measure = res.group(2)
 
@@ -85,7 +85,7 @@ class HandlerxNUMBER(PatternHandler):
 
         self.match = True
 
-        self.units = int(res.group(1))
+        self.units = float(res.group(1))
 
         res = re.search(RE.NO_SYMBOL_NUMBER_UOM, self.string)
         if not res:
@@ -117,7 +117,7 @@ class HandlerNUMBER_WITH_PIECES_WORD(PatternHandler):
 
         self.match = True
 
-        self.units = int(res.group(1))
+        self.units = float(res.group(1))
 
         res = re.search(RE.NUMBER_UOM, self.string)
         if not res:
@@ -150,7 +150,7 @@ class HandlerNUMBER(PatternHandler):
 
         self.match = True
 
-        self.units = int(res.group(1))
+        self.units = float(res.group(1))
 
 
 PATTERN_HANDLERS: list[type[PatternHandler]] = [
