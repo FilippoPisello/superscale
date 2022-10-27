@@ -3,6 +3,7 @@ import re
 import pytest
 
 from superscale import regex_strings as RE
+from superscale.pattern_handlers import HandlerNUMBER_WITH_PIECES_WORD
 
 
 @pytest.mark.parametrize(
@@ -80,3 +81,11 @@ def test_fraction_pattern():
 def test_kilo_pattern():
     actual = re.search(RE.ISOLATED_KILO, "frites u sachet kg")
     assert actual.group(1) == "kg"
+
+
+@pytest.mark.parametrize(
+    ("text", "is_found"),
+    [("cora film etirable 20 metres", False), ("saumon fume ecosse 2tr 75g", True)],
+)
+def test_pieces_word_is_found(text, is_found):
+    assert HandlerNUMBER_WITH_PIECES_WORD._pieces_words_in_name(text) == is_found

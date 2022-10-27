@@ -113,11 +113,12 @@ class HandlerNUMBER_WITH_PIECES_WORD(PatternHandler):
         if not self._pieces_words_in_name(self.string):
             return
 
-        res = re.search(RE.ISOLATED_INTEGER, self.string)
+        for pattern in [RE.ISOLATED_INTEGER, RE.xNUMBER, RE.INTEGER_UOM_PIECE]:
+            res = re.search(pattern, self.string)
+            if res:
+                break
         if not res:
-            res = re.search(RE.xNUMBER, self.string)
-            if not res:
-                return
+            return
 
         self.match = True
 
@@ -131,7 +132,9 @@ class HandlerNUMBER_WITH_PIECES_WORD(PatternHandler):
 
     @staticmethod
     def _pieces_words_in_name(product_name: str) -> bool:
-        return any([word in product_name for word in CN.PIECES_UOMS])
+        if re.search(RE.UOM_WORD, product_name):
+            return True
+        return False
 
 
 class HandlerFRACTION_UOM(PatternHandler):
