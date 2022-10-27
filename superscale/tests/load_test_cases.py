@@ -17,7 +17,7 @@ def _test_cases_to_custom_object(file_path: str) -> list[tuple[str, ItemMeasure]
     test_cases = []
     ItemMeasure.infer = False
 
-    with open(file_path) as csv_file:
+    with open(file_path, encoding="utf8") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=",")
 
         for row_number, row in enumerate(csv_reader):

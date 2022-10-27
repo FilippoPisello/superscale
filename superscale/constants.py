@@ -17,4 +17,5 @@ for _, uom in CONFIG.units_of_measure.items():
 
 RE_REGULAR_UOMS = "|".join(REGULAR_UOMS)
 RE_LENGTH_UOMS = "|".join(LENGTH_UOMS)
+RE_PIECES_UOMS = "|".join(PIECES_UOMS)
 RE_KILO_UOMS = "|".join(KILO_UOMS)

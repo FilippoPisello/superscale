@@ -83,6 +83,11 @@ def test_kilo_pattern():
     assert actual.group(1) == "kg"
 
 
+def test_piece_uom_pattern():
+    actual = re.search(RE.INTEGER_UOM_PIECE, "saumon fume ecosse 2tr 75g")
+    assert actual.group(1) == "2"
+
+
 @pytest.mark.parametrize(
     ("text", "is_found"),
     [("cora film etirable 20 metres", False), ("saumon fume ecosse 2tr 75g", True)],

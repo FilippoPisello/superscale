@@ -33,6 +33,8 @@
       "sachet": { "convert_to": "piece", "ratio": 1, "priority": 1 },
       "pochette": { "convert_to": "piece", "ratio": 1, "priority": 1 },
       "pochettes": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+      "tranches": { "convert_to": "piece", "ratio": 1, "priority": 1 },
+      "tr": { "convert_to": "piece", "ratio": 1, "priority": 1 },
       "metres": { "convert_to": "meter", "ratio": 1, "priority": 2 }
     }
   }
