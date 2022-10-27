@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import re
+import unicodedata
 from typing import Any
 
 from superscale import CONFIG
 from superscale.pattern_handlers import PATTERN_HANDLERS
+from superscale.regex_strings import UNWANTED_PATTERNS
 
 
 def extract_measure_from_string(input_string: str) -> dict[str, Any]:
@@ -31,6 +34,27 @@ def extract_measure_from_string(input_string: str) -> dict[str, Any]:
 
 def clean_input_string(input_str: str) -> str:
     input_str = input_str.replace(",", ".").strip().lower()
+    input_str = _remove_accents(input_str)
+    input_str = _remove_unwanted_patterns(input_str)
     for character in CONFIG.multipack_symbols:
         input_str = input_str.replace(character, "x")
-    return input_str
+    return _remove_double_spaces(input_str)
+
+
+def _remove_accents(text: str) -> str:
+    return "".join(
+        c for c in unicodedata.normalize("NFD", text) if unicodedata.category(c) != "Mn"
+    )
+
+
+def _remove_unwanted_patterns(text: str) -> str:
+    for pattern in UNWANTED_PATTERNS:
+        res = re.search(pattern, text)
+        if not res:
+            continue
+        text = text.replace(res.group(0), "")
+    return text
+
+
+def _remove_double_spaces(text: str) -> str:
+    return text.replace("  ", " ")
