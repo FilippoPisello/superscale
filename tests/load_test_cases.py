@@ -5,19 +5,20 @@ from pathlib import Path
 from typing import Any, Type
 
 from superscale.itemmeasure import ItemMeasure
+from tests import TEST_DATA_DIR
 
 
 def load_test_cases(localization_code: str) -> list[tuple[str, ItemMeasure]]:
     """Load test cases from the proper csv file."""
-    file_path = _get_test_cases_file_path_per_localization(localization_code)
+    file_path = TEST_DATA_DIR / f"test_cases_{localization_code}.csv"
     return _test_cases_to_custom_object(file_path)
 
 
-def _test_cases_to_custom_object(file_path: str) -> list[tuple[str, ItemMeasure]]:
+def _test_cases_to_custom_object(file: Path) -> list[tuple[str, ItemMeasure]]:
     test_cases = []
     ItemMeasure.infer = False
 
-    with open(file_path, encoding="utf8") as csv_file:
+    with open(file, encoding="utf8") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=",")
 
         for row_number, row in enumerate(csv_reader):
@@ -38,13 +39,7 @@ def _test_cases_to_custom_object(file_path: str) -> list[tuple[str, ItemMeasure]
     return test_cases
 
 
-def _get_test_cases_file_path_per_localization(localization_code: str) -> str:
-    _current_dir = Path(__file__).parent.resolve()
-    suffix = rf"test_data\test_cases_{localization_code}.csv"
-    return Path(_current_dir / suffix)
-
-
-def _coerce_to_type(value: Any, type: Type) -> Any:
+def _coerce_to_type(value: Any, _type: Type) -> Any:
     if not value:
         return None
-    return type(value)
+    return _type(value)
