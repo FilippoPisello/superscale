@@ -3,7 +3,7 @@ import re
 import pytest
 
 from superscale import regex_strings as RE
-from superscale.pattern_handlers import HandlerNUMBER_WITH_PIECES_WORD
+from superscale.pattern_handlers import NUMBER_WITH_PIECES_WORD
 
 
 @pytest.mark.parametrize(
@@ -93,4 +93,4 @@ def test_piece_uom_pattern():
     [("cora film etirable 20 metres", False), ("saumon fume ecosse 2tr 75g", True)],
 )
 def test_pieces_word_is_found(text, is_found):
-    assert HandlerNUMBER_WITH_PIECES_WORD._pieces_words_in_name(text) == is_found
+    assert NUMBER_WITH_PIECES_WORD._pieces_words_in_name(text) == is_found

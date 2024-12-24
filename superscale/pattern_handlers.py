@@ -37,7 +37,7 @@ class PatternHandler(ABC):
         return self.unit_of_measure
 
 
-class HandlerNUMBER_METERxNUMBER_METER(PatternHandler):
+class NUMBER_METERxNUMBER_METER(PatternHandler):
     def search_string(self) -> str | None:
         res = re.search(RE.NUMBER_METERxNUMBER_METER, self.string)
         if not res:
@@ -51,7 +51,7 @@ class HandlerNUMBER_METERxNUMBER_METER(PatternHandler):
         self.unit_of_measure = res.group(2)
 
 
-class HandlerNUMBERxNUMBER_UOM(PatternHandler):
+class NUMBERxNUMBER_UOM(PatternHandler):
     def search_string(self) -> str | None:
         res = re.search(RE.NUMBERxNUMBER_UOM, self.string)
         if not res:
@@ -64,7 +64,7 @@ class HandlerNUMBERxNUMBER_UOM(PatternHandler):
         self.unit_of_measure = res.group(3)
 
 
-class HandlerNUMBER_UOM_xNUMBER(PatternHandler):
+class NUMBER_UOM_xNUMBER(PatternHandler):
     def search_string(self) -> str | None:
         res = re.search(RE.NUMBER_UOM_xNUMBER, self.string)
         if not res:
@@ -77,7 +77,7 @@ class HandlerNUMBER_UOM_xNUMBER(PatternHandler):
         self.unit_of_measure = res.group(2)
 
 
-class HandlerxNUMBER(PatternHandler):
+class xNUMBER(PatternHandler):
     def search_string(self) -> str | None:
         res = re.search(RE.xNUMBER, self.string)
         if not res:
@@ -94,7 +94,7 @@ class HandlerxNUMBER(PatternHandler):
         self.unit_of_measure = res.group(2)
 
 
-class HandlerNUMBER_UOM(PatternHandler):
+class NUMBER_UOM(PatternHandler):
     def search_string(self) -> str | None:
         res = re.search(RE.NO_SYMBOL_NUMBER_UOM, self.string)
         if not res:
@@ -106,7 +106,7 @@ class HandlerNUMBER_UOM(PatternHandler):
         self.unit_of_measure = res.group(2)
 
 
-class HandlerNUMBER_WITH_PIECES_WORD(PatternHandler):
+class NUMBER_WITH_PIECES_WORD(PatternHandler):
     def search_string(self) -> str | None:
         if not self._pieces_words_in_name(self.string):
             return
@@ -135,7 +135,7 @@ class HandlerNUMBER_WITH_PIECES_WORD(PatternHandler):
         return False
 
 
-class HandlerFRACTION_UOM(PatternHandler):
+class FRACTION_UOM(PatternHandler):
     def search_string(self) -> str | None:
         res = re.search(RE.FRACTION_UOM, self.string)
         if not res:
@@ -147,7 +147,7 @@ class HandlerFRACTION_UOM(PatternHandler):
         self.unit_of_measure = res.group(3)
 
 
-class HandlerNUMBER(PatternHandler):
+class NUMBER(PatternHandler):
     def search_string(self) -> str | None:
         res = re.search(RE.NUMBER, self.string)
         if not res:
@@ -158,7 +158,7 @@ class HandlerNUMBER(PatternHandler):
         self.units = float(res.group(1))
 
 
-class HandlerISOLATED_KILO(PatternHandler):
+class ISOLATED_KILO(PatternHandler):
     def search_string(self) -> str | None:
         res = re.search(RE.ISOLATED_KILO, self.string)
         if not res:
@@ -170,7 +170,7 @@ class HandlerISOLATED_KILO(PatternHandler):
         self.unit_of_measure = res.group(1)
 
 
-class HandlerNUMBER_UOM_LETTER(PatternHandler):
+class NUMBER_UOM_LETTER(PatternHandler):
     def search_string(self) -> str | None:
         res = re.search(RE.NUMBER_UOM_LETTER, self.string)
         if not res:
@@ -182,7 +182,7 @@ class HandlerNUMBER_UOM_LETTER(PatternHandler):
         self.unit_of_measure = res.group(2)
 
 
-class HandlerxNUMBER_LETTER(PatternHandler):
+class xNUMBER_LETTER(PatternHandler):
     def search_string(self) -> str | None:
         res = re.search(RE.xNUMBER_LETTER, self.string)
         if not res:
@@ -200,15 +200,15 @@ class HandlerxNUMBER_LETTER(PatternHandler):
 
 
 PATTERN_HANDLERS: list[type[PatternHandler]] = [
-    HandlerNUMBER_METERxNUMBER_METER,
-    HandlerNUMBERxNUMBER_UOM,
-    HandlerNUMBER_UOM_xNUMBER,
-    HandlerxNUMBER,
-    HandlerxNUMBER_LETTER,
-    HandlerNUMBER_WITH_PIECES_WORD,
-    HandlerFRACTION_UOM,
-    HandlerNUMBER_UOM,
-    HandlerNUMBER_UOM_LETTER,
-    HandlerNUMBER,
-    HandlerISOLATED_KILO,
+    NUMBER_METERxNUMBER_METER,
+    NUMBERxNUMBER_UOM,
+    NUMBER_UOM_xNUMBER,
+    xNUMBER,
+    xNUMBER_LETTER,
+    NUMBER_WITH_PIECES_WORD,
+    FRACTION_UOM,
+    NUMBER_UOM,
+    NUMBER_UOM_LETTER,
+    NUMBER,
+    ISOLATED_KILO,
 ]
