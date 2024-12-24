@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from superscale import CONFIG
-from superscale.exceptions import UnitOfMeasureNotFoundError
+from superscale.config.load_config import UnitOfMeasureNotFoundError
 from superscale.extractor import extract_measure_from_string
 
 

@@ -5,8 +5,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from superscale.exceptions import UnitOfMeasureNotFoundError
 from superscale.unit_of_measure import UnitOfMeasure
+
+
+class UnitOfMeasureNotFoundError(Exception):
+    """Raised when a unit of measure is not found in the config file."""
 
 
 @dataclass
