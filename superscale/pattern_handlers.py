@@ -3,7 +3,6 @@ from __future__ import annotations
 import re
 from abc import ABC, abstractmethod
 
-from . import constants as CN
 from . import regex_strings as RE
 
 
@@ -20,8 +19,7 @@ class PatternHandler(ABC):
         self.search_string()
 
     @abstractmethod
-    def search_string(self) -> None:
-        ...
+    def search_string(self) -> None: ...
 
     def is_match(self) -> bool:
         return self.match
@@ -29,18 +27,18 @@ class PatternHandler(ABC):
     def get_units(self) -> int:
         return self.units
 
-    def get_unitary_measure(self) -> float:
+    def get_unitary_measure(self) -> float | None:
         return self.unitary_measure
 
-    def get_total_measure(self) -> float:
+    def get_total_measure(self) -> float | None:
         return self.total_measure
 
-    def get_unit_of_measure(self) -> str:
+    def get_unit_of_measure(self) -> str | None:
         return self.unit_of_measure
 
 
 class HandlerNUMBER_METERxNUMBER_METER(PatternHandler):
-    def search_string(self) -> str:
+    def search_string(self) -> str | None:
         res = re.search(RE.NUMBER_METERxNUMBER_METER, self.string)
         if not res:
             return
@@ -54,7 +52,7 @@ class HandlerNUMBER_METERxNUMBER_METER(PatternHandler):
 
 
 class HandlerNUMBERxNUMBER_UOM(PatternHandler):
-    def search_string(self) -> str:
+    def search_string(self) -> str | None:
         res = re.search(RE.NUMBERxNUMBER_UOM, self.string)
         if not res:
             return
@@ -67,7 +65,7 @@ class HandlerNUMBERxNUMBER_UOM(PatternHandler):
 
 
 class HandlerNUMBER_UOM_xNUMBER(PatternHandler):
-    def search_string(self) -> str:
+    def search_string(self) -> str | None:
         res = re.search(RE.NUMBER_UOM_xNUMBER, self.string)
         if not res:
             return
@@ -80,7 +78,7 @@ class HandlerNUMBER_UOM_xNUMBER(PatternHandler):
 
 
 class HandlerxNUMBER(PatternHandler):
-    def search_string(self) -> str:
+    def search_string(self) -> str | None:
         res = re.search(RE.xNUMBER, self.string)
         if not res:
             return
@@ -97,7 +95,7 @@ class HandlerxNUMBER(PatternHandler):
 
 
 class HandlerNUMBER_UOM(PatternHandler):
-    def search_string(self) -> str:
+    def search_string(self) -> str | None:
         res = re.search(RE.NO_SYMBOL_NUMBER_UOM, self.string)
         if not res:
             return
@@ -109,7 +107,7 @@ class HandlerNUMBER_UOM(PatternHandler):
 
 
 class HandlerNUMBER_WITH_PIECES_WORD(PatternHandler):
-    def search_string(self) -> str:
+    def search_string(self) -> str | None:
         if not self._pieces_words_in_name(self.string):
             return
 
@@ -138,7 +136,7 @@ class HandlerNUMBER_WITH_PIECES_WORD(PatternHandler):
 
 
 class HandlerFRACTION_UOM(PatternHandler):
-    def search_string(self) -> str:
+    def search_string(self) -> str | None:
         res = re.search(RE.FRACTION_UOM, self.string)
         if not res:
             return
@@ -150,7 +148,7 @@ class HandlerFRACTION_UOM(PatternHandler):
 
 
 class HandlerNUMBER(PatternHandler):
-    def search_string(self) -> str:
+    def search_string(self) -> str | None:
         res = re.search(RE.NUMBER, self.string)
         if not res:
             return
@@ -161,7 +159,7 @@ class HandlerNUMBER(PatternHandler):
 
 
 class HandlerISOLATED_KILO(PatternHandler):
-    def search_string(self) -> str:
+    def search_string(self) -> str | None:
         res = re.search(RE.ISOLATED_KILO, self.string)
         if not res:
             return
@@ -173,7 +171,7 @@ class HandlerISOLATED_KILO(PatternHandler):
 
 
 class HandlerNUMBER_UOM_LETTER(PatternHandler):
-    def search_string(self) -> str:
+    def search_string(self) -> str | None:
         res = re.search(RE.NUMBER_UOM_LETTER, self.string)
         if not res:
             return
@@ -185,7 +183,7 @@ class HandlerNUMBER_UOM_LETTER(PatternHandler):
 
 
 class HandlerxNUMBER_LETTER(PatternHandler):
-    def search_string(self) -> str:
+    def search_string(self) -> str | None:
         res = re.search(RE.xNUMBER_LETTER, self.string)
         if not res:
             return
