@@ -19,5 +19,8 @@ class UnitOfMeasure:
     def is_weight_measure(self) -> bool:
         return self.convert_to == "kilo"
 
+    def is_volume_measure(self) -> bool:
+        return self.convert_to == "liter"
+
     def is_kilo_synonym(self) -> bool:
         return (self.convert_to == "kilo") and (self.ratio == 1)

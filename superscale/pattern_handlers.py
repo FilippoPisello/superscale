@@ -5,9 +5,12 @@ from typing import Callable
 
 from superscale.itemmeasure import ItemMeasure
 
+from . import constants as CN
 from . import regex_strings as RE
 
 PatternMatcher = Callable[[str], ItemMeasure | None]
+
+UOM_GROUPS = [CN.RE_WEIGHT_UOMS, CN.RE_VOLUME_UOMS, CN.RE_REGULAR_UOMS]
 
 
 def NUMBER_METERxNUMBER_METER(string: str) -> ItemMeasure | None:
@@ -23,7 +26,7 @@ def NUMBER_METERxNUMBER_METER(string: str) -> ItemMeasure | None:
 
 
 def NUMBERxNUMBER_UOM(string: str) -> ItemMeasure | None:
-    res = re.search(RE.NUMBERxNUMBER_UOM, string)
+    res = _match_against_uom_groups(RE.NUMBERxNUMBER_UOM, string)
     if not res:
         return
 
@@ -36,7 +39,7 @@ def NUMBERxNUMBER_UOM(string: str) -> ItemMeasure | None:
 
 
 def NUMBER_UOM_xNUMBER(string: str) -> ItemMeasure | None:
-    res = re.search(RE.NUMBER_UOM_xNUMBER, string)
+    res = _match_against_uom_groups(RE.NUMBER_UOM_xNUMBER, string)
     if not res:
         return
 
@@ -55,7 +58,7 @@ def xNUMBER(string: str) -> ItemMeasure | None:
 
     units = float(res.group(1))
 
-    res = re.search(RE.NO_SYMBOL_NUMBER_UOM, string)
+    res = _match_against_uom_groups(RE.NO_SYMBOL_NUMBER_UOM, string)
     if not res:
         return ItemMeasure(units=units)
 
@@ -67,7 +70,7 @@ def xNUMBER(string: str) -> ItemMeasure | None:
 
 
 def NUMBER_UOM(string: str) -> ItemMeasure | None:
-    res = re.search(RE.NO_SYMBOL_NUMBER_UOM, string)
+    res = _match_against_uom_groups(RE.NO_SYMBOL_NUMBER_UOM, string)
     if not res:
         return
 
@@ -91,7 +94,7 @@ def NUMBER_WITH_PIECES_WORD(string: str) -> ItemMeasure | None:
 
     units = float(res.group(1))
 
-    res = re.search(RE.NUMBER_UOM, string)
+    res = _match_against_uom_groups(RE.NUMBER_UOM, string)
     if not res:
         return ItemMeasure(units=units)
 
@@ -109,7 +112,7 @@ def _pieces_words_in_name(product_name: str) -> bool:
 
 
 def FRACTION_UOM(string: str) -> ItemMeasure | None:
-    res = re.search(RE.FRACTION_UOM, string)
+    res = _match_against_uom_groups(RE.FRACTION_UOM, string)
     if not res:
         return
 
@@ -137,7 +140,7 @@ def ISOLATED_KILO(string: str) -> ItemMeasure | None:
 
 
 def NUMBER_UOM_LETTER(string: str) -> ItemMeasure | None:
-    res = re.search(RE.NUMBER_UOM_LETTER, string)
+    res = _match_against_uom_groups(RE.NUMBER_UOM_LETTER, string)
     if not res:
         return
 
@@ -155,7 +158,7 @@ def xNUMBER_LETTER(string: str) -> ItemMeasure | None:
 
     units = float(res.group(1))
 
-    res = re.search(RE.NO_SYMBOL_NUMBER_UOM, string)
+    res = _match_against_uom_groups(RE.NO_SYMBOL_NUMBER_UOM, string)
     if not res:
         return ItemMeasure(units=units)
 
@@ -164,6 +167,24 @@ def xNUMBER_LETTER(string: str) -> ItemMeasure | None:
         total_measure=float(res.group(1)),
         unit_of_measure=res.group(2),
     )
+
+
+def _match_against_uom_groups(pattern: str, string: str) -> re.Match | None:
+    """Test the same pattern against different UOM groups.
+
+    We need to test UOMs in this way to force priority over the different types,
+    in particular trying weight and volume before other less likely stuff like
+    length.
+
+    Setting the UOMs directly in the pattern does not result in the same behavior
+    because the regex might branch out on the wrong UOM because of an earlier
+    alternative block.
+    """
+    for uom_patterns in UOM_GROUPS:
+        res = re.search(pattern.replace("<uom-regex>", uom_patterns), string)
+        if res:
+            return res
+    return None
 
 
 PATTERN_HANDLERS: list[PatternMatcher] = [
