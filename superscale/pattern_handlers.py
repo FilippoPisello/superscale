@@ -19,22 +19,7 @@ class PatternHandler(ABC):
         self.search_string()
 
     @abstractmethod
-    def search_string(self) -> None: ...
-
-    def is_match(self) -> bool:
-        return self.match
-
-    def get_units(self) -> int:
-        return self.units
-
-    def get_unitary_measure(self) -> float | None:
-        return self.unitary_measure
-
-    def get_total_measure(self) -> float | None:
-        return self.total_measure
-
-    def get_unit_of_measure(self) -> str | None:
-        return self.unit_of_measure
+    def search_string(self) -> str | None: ...
 
 
 class NUMBER_METERxNUMBER_METER(PatternHandler):

@@ -21,11 +21,11 @@ def extract_measure_from_string(input_string: str) -> dict[str, Any]:
 
     for pattern in PATTERN_HANDLERS:
         pattern = pattern(input_string)
-        if pattern.is_match():
-            measure_dict["units"] = pattern.get_units()
-            measure_dict["unitary_measure"] = pattern.get_unitary_measure()
-            measure_dict["total_measure"] = pattern.get_total_measure()
-            measure_dict["unit_of_measure"] = pattern.get_unit_of_measure()
+        if pattern.match:
+            measure_dict["units"] = pattern.units
+            measure_dict["unitary_measure"] = pattern.unitary_measure
+            measure_dict["total_measure"] = pattern.total_measure
+            measure_dict["unit_of_measure"] = pattern.unit_of_measure
 
             return measure_dict
 
