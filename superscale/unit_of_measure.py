@@ -7,7 +7,7 @@ from dataclasses import dataclass
 class UnitOfMeasure:
     label: str
     convert_to: str
-    ratio: int | float
+    ratio: float
     priority: int = 1
 
     def is_piece_measure(self) -> bool:

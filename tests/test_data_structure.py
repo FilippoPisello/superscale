@@ -24,5 +24,4 @@ def test_weight_inferred():
     ],
 )
 def test_conversion(measure, expected):
-    measure.convert()
-    assert measure == expected
+    assert measure.convert() == expected
