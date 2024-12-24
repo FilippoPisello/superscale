@@ -1,190 +1,172 @@
 from __future__ import annotations
 
 import re
-from abc import ABC, abstractmethod
+from typing import Callable
+
+from superscale.itemmeasure import ItemMeasure
 
 from . import regex_strings as RE
 
-
-class PatternHandler(ABC):
-    def __init__(self, string: str) -> None:
-        self.string = string
-
-        self.match = False
-        self.units = 1
-        self.unitary_measure = None
-        self.total_measure = None
-        self.unit_of_measure = None
-
-        self.search_string()
-
-    @abstractmethod
-    def search_string(self) -> str | None: ...
+PatternMatcher = Callable[[str], ItemMeasure | None]
 
 
-class NUMBER_METERxNUMBER_METER(PatternHandler):
-    def search_string(self) -> str | None:
-        res = re.search(RE.NUMBER_METERxNUMBER_METER, self.string)
-        if not res:
-            return
+def NUMBER_METERxNUMBER_METER(string: str) -> ItemMeasure | None:
+    res = re.search(RE.NUMBER_METERxNUMBER_METER, string)
+    if not res:
+        return
 
-        self.match = True
-
-        dim1 = float(res.group(1))
-        dim2 = float(res.group(3))
-        self.total_measure = max(dim1, dim2)
-        self.unit_of_measure = res.group(2)
+    dim1 = float(res.group(1))
+    dim2 = float(res.group(3))
+    return ItemMeasure(
+        units=1, total_measure=max(dim1, dim2), unit_of_measure=res.group(2)
+    )
 
 
-class NUMBERxNUMBER_UOM(PatternHandler):
-    def search_string(self) -> str | None:
-        res = re.search(RE.NUMBERxNUMBER_UOM, self.string)
-        if not res:
-            return
+def NUMBERxNUMBER_UOM(string: str) -> ItemMeasure | None:
+    res = re.search(RE.NUMBERxNUMBER_UOM, string)
+    if not res:
+        return
 
-        self.match = True
-
-        self.units = float(res.group(1))
-        self.unitary_measure = float(res.group(2))
-        self.unit_of_measure = res.group(3)
-
-
-class NUMBER_UOM_xNUMBER(PatternHandler):
-    def search_string(self) -> str | None:
-        res = re.search(RE.NUMBER_UOM_xNUMBER, self.string)
-        if not res:
-            return
-
-        self.match = True
-
-        self.units = float(res.group(3))
-        self.unitary_measure = float(res.group(1))
-        self.unit_of_measure = res.group(2)
+    units = float(res.group(1))
+    return ItemMeasure(
+        units=units,
+        total_measure=float(res.group(2)) * units,
+        unit_of_measure=res.group(3),
+    )
 
 
-class xNUMBER(PatternHandler):
-    def search_string(self) -> str | None:
-        res = re.search(RE.xNUMBER, self.string)
-        if not res:
-            return
+def NUMBER_UOM_xNUMBER(string: str) -> ItemMeasure | None:
+    res = re.search(RE.NUMBER_UOM_xNUMBER, string)
+    if not res:
+        return
 
-        self.match = True
-
-        self.units = float(res.group(1))
-
-        res = re.search(RE.NO_SYMBOL_NUMBER_UOM, self.string)
-        if not res:
-            return
-        self.total_measure = float(res.group(1))
-        self.unit_of_measure = res.group(2)
+    units = float(res.group(3))
+    return ItemMeasure(
+        units=units,
+        total_measure=float(res.group(1)) * units,
+        unit_of_measure=res.group(2),
+    )
 
 
-class NUMBER_UOM(PatternHandler):
-    def search_string(self) -> str | None:
-        res = re.search(RE.NO_SYMBOL_NUMBER_UOM, self.string)
-        if not res:
-            return
+def xNUMBER(string: str) -> ItemMeasure | None:
+    res = re.search(RE.xNUMBER, string)
+    if not res:
+        return
 
-        self.match = True
+    units = float(res.group(1))
 
-        self.total_measure = float(res.group(1))
-        self.unit_of_measure = res.group(2)
+    res = re.search(RE.NO_SYMBOL_NUMBER_UOM, string)
+    if not res:
+        return ItemMeasure(units=units)
 
-
-class NUMBER_WITH_PIECES_WORD(PatternHandler):
-    def search_string(self) -> str | None:
-        if not self._pieces_words_in_name(self.string):
-            return
-
-        for pattern in [RE.ISOLATED_INTEGER, RE.xNUMBER, RE.INTEGER_UOM_PIECE]:
-            res = re.search(pattern, self.string)
-            if res:
-                break
-        if not res:
-            return
-
-        self.match = True
-
-        self.units = float(res.group(1))
-
-        res = re.search(RE.NUMBER_UOM, self.string)
-        if not res:
-            return
-        self.total_measure = float(res.group(1))
-        self.unit_of_measure = res.group(2)
-
-    @staticmethod
-    def _pieces_words_in_name(product_name: str) -> bool:
-        if re.search(RE.UOM_WORD, product_name):
-            return True
-        return False
+    return ItemMeasure(
+        units=units,
+        total_measure=float(res.group(1)),
+        unit_of_measure=res.group(2),
+    )
 
 
-class FRACTION_UOM(PatternHandler):
-    def search_string(self) -> str | None:
-        res = re.search(RE.FRACTION_UOM, self.string)
-        if not res:
-            return
+def NUMBER_UOM(string: str) -> ItemMeasure | None:
+    res = re.search(RE.NO_SYMBOL_NUMBER_UOM, string)
+    if not res:
+        return
 
-        self.match = True
-
-        self.total_measure = float(res.group(1)) / float(res.group(2))
-        self.unit_of_measure = res.group(3)
-
-
-class NUMBER(PatternHandler):
-    def search_string(self) -> str | None:
-        res = re.search(RE.NUMBER, self.string)
-        if not res:
-            return
-
-        self.match = True
-
-        self.units = float(res.group(1))
+    return ItemMeasure(
+        units=1,
+        total_measure=float(res.group(1)),
+        unit_of_measure=res.group(2),
+    )
 
 
-class ISOLATED_KILO(PatternHandler):
-    def search_string(self) -> str | None:
-        res = re.search(RE.ISOLATED_KILO, self.string)
-        if not res:
-            return
+def NUMBER_WITH_PIECES_WORD(string: str) -> ItemMeasure | None:
+    if not _pieces_words_in_name(string):
+        return
 
-        self.match = True
+    for pattern in [RE.ISOLATED_INTEGER, RE.xNUMBER, RE.INTEGER_UOM_PIECE]:
+        res = re.search(pattern, string)
+        if res:
+            break
+    else:
+        return
 
-        self.total_measure = 1
-        self.unit_of_measure = res.group(1)
+    units = float(res.group(1))
 
+    res = re.search(RE.NUMBER_UOM, string)
+    if not res:
+        return ItemMeasure(units=units)
 
-class NUMBER_UOM_LETTER(PatternHandler):
-    def search_string(self) -> str | None:
-        res = re.search(RE.NUMBER_UOM_LETTER, self.string)
-        if not res:
-            return
-
-        self.match = True
-
-        self.total_measure = float(res.group(1))
-        self.unit_of_measure = res.group(2)
-
-
-class xNUMBER_LETTER(PatternHandler):
-    def search_string(self) -> str | None:
-        res = re.search(RE.xNUMBER_LETTER, self.string)
-        if not res:
-            return
-
-        self.match = True
-
-        self.units = float(res.group(1))
-
-        res = re.search(RE.NO_SYMBOL_NUMBER_UOM, self.string)
-        if not res:
-            return
-        self.total_measure = float(res.group(1))
-        self.unit_of_measure = res.group(2)
+    return ItemMeasure(
+        units=units,
+        total_measure=float(res.group(1)),
+        unit_of_measure=res.group(2),
+    )
 
 
-PATTERN_HANDLERS: list[type[PatternHandler]] = [
+def _pieces_words_in_name(product_name: str) -> bool:
+    if re.search(RE.UOM_WORD, product_name):
+        return True
+    return False
+
+
+def FRACTION_UOM(string: str) -> ItemMeasure | None:
+    res = re.search(RE.FRACTION_UOM, string)
+    if not res:
+        return
+
+    return ItemMeasure(
+        units=1,
+        total_measure=float(res.group(1)) / float(res.group(2)),
+        unit_of_measure=res.group(3),
+    )
+
+
+def NUMBER(string: str) -> ItemMeasure | None:
+    res = re.search(RE.NUMBER, string)
+    if not res:
+        return
+
+    return ItemMeasure(units=float(res.group(1)))
+
+
+def ISOLATED_KILO(string: str) -> ItemMeasure | None:
+    res = re.search(RE.ISOLATED_KILO, string)
+    if not res:
+        return
+
+    return ItemMeasure(units=1, total_measure=1, unit_of_measure=res.group(1))
+
+
+def NUMBER_UOM_LETTER(string: str) -> ItemMeasure | None:
+    res = re.search(RE.NUMBER_UOM_LETTER, string)
+    if not res:
+        return
+
+    return ItemMeasure(
+        units=1,
+        total_measure=float(res.group(1)),
+        unit_of_measure=res.group(2),
+    )
+
+
+def xNUMBER_LETTER(string: str) -> ItemMeasure | None:
+    res = re.search(RE.xNUMBER_LETTER, string)
+    if not res:
+        return
+
+    units = float(res.group(1))
+
+    res = re.search(RE.NO_SYMBOL_NUMBER_UOM, string)
+    if not res:
+        return ItemMeasure(units=units)
+
+    return ItemMeasure(
+        units=units,
+        total_measure=float(res.group(1)),
+        unit_of_measure=res.group(2),
+    )
+
+
+PATTERN_HANDLERS: list[PatternMatcher] = [
     NUMBER_METERxNUMBER_METER,
     NUMBERxNUMBER_UOM,
     NUMBER_UOM_xNUMBER,

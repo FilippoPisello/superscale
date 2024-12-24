@@ -29,7 +29,6 @@ def _test_cases_to_custom_object(file: Path) -> list[tuple[str, ItemMeasure]]:
             input_string = _coerce_to_type(row[0], str)
             test_case = ItemMeasure(
                 units=_coerce_to_type(row[1], int),
-                unitary_measure=_coerce_to_type(row[2], float),
                 total_measure=_coerce_to_type(row[3], float),
                 unit_of_measure=_coerce_to_type(row[4], str),
             )

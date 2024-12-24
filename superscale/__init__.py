@@ -1,2 +1,3 @@
 from .config import CONFIG
-from .itemmeasure import ItemMeasure, scrape_measures
+from .extractor import scrape_measures
+from .itemmeasure import ItemMeasure

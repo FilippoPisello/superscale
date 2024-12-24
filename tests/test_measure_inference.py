@@ -1,6 +1,6 @@
 import pytest
 
-from superscale.itemmeasure import ItemMeasure
+from superscale.extractor import scrape_measures
 
 from .load_test_cases import load_test_cases
 
@@ -13,8 +13,7 @@ TEST_CASES = load_test_cases(LOCALIZATION_CODE_FR)
     TEST_CASES,
 )
 def test_units_extraction(input_string, expected):
-    ItemMeasure.infer = True
-    actual = ItemMeasure.from_string(input_string)
+    actual = scrape_measures(input_string)
 
-    for attr in ["units", "unitary_measure", "total_measure", "unit_of_measure"]:
+    for attr in ["units", "total_measure", "unit_of_measure"]:
         assert getattr(actual, attr) == getattr(expected, attr)

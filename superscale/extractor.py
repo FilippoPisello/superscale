@@ -2,34 +2,38 @@ from __future__ import annotations
 
 import re
 import unicodedata
-from typing import Any
 
 from superscale import CONFIG
+from superscale.itemmeasure import ItemMeasure
 from superscale.pattern_handlers import PATTERN_HANDLERS
 from superscale.regex_strings import UNWANTED_PATTERNS
 
 
-def extract_measure_from_string(input_string: str) -> dict[str, Any]:
-    input_string = clean_input_string(input_string)
+def scrape_measures(string: str) -> ItemMeasure:
+    """Return size information found in the provided text.
 
-    measure_dict = {
-        "units": None,
-        "unitary_measure": None,
-        "total_measure": None,
-        "unit_of_measure": None,
-    }
+    Args:
+        text (str): the string to be searched.
+
+    Returns:
+        ArticleMeasure: custom object holding all the size information found.
+
+    Examples:
+        >>> import superscale
+        >>> article = "Heinz Baked Beans In Tomato Sauce 4X415g"
+        >>> superscale.scrape_measures(article)
+        ItemMeasure(units=4.0, unitary_measure=415.0, total_measure=1660.0,
+        unit_of_measure='g')
+    """
+    string = clean_input_string(string)
 
     for pattern in PATTERN_HANDLERS:
-        pattern = pattern(input_string)
-        if pattern.match:
-            measure_dict["units"] = pattern.units
-            measure_dict["unitary_measure"] = pattern.unitary_measure
-            measure_dict["total_measure"] = pattern.total_measure
-            measure_dict["unit_of_measure"] = pattern.unit_of_measure
+        result = pattern(string)
+        if result is None:
+            continue
+        return result
 
-            return measure_dict
-
-    return measure_dict
+    return ItemMeasure()
 
 
 def clean_input_string(input_str: str) -> str:
